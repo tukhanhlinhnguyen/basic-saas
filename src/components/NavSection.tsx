@@ -16,7 +16,8 @@ import {
   ListItemButton,
   ListItemButtonProps
 } from '@mui/material';
-
+// hooks
+import useLocales from '../hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const ListSubheaderStyle = styled((props) => (
@@ -82,6 +83,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
   const { pathname } = useLocation();
   const { title, path, icon, info, children } = item;
   const isActiveRoot = path ? !!matchPath({ path, end: false }, pathname) : false;
+  const { translate } = useLocales();
 
   const [open, setOpen] = useState(isActiveRoot);
 
@@ -130,6 +132,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
             <List component="div" disablePadding>
               {children.map((item) => {
                 const { title, path } = item;
+                console.log('title:', title);
                 const isActiveSub = path ? !!matchPath({ path, end: false }, pathname) : false;
 
                 return (
@@ -160,7 +163,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
                         }}
                       />
                     </ListItemIconStyle>
-                    <ListItemText disableTypography primary={title} />
+                    <ListItemText disableTypography primary={translate(title)} />
                   </ListItemStyle>
                 );
               })}
@@ -182,7 +185,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
       <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
       {isShow && (
         <>
-          <ListItemText disableTypography primary={title} />
+          <ListItemText disableTypography primary={translate(title)} />
           {info && info}
         </>
       )}
@@ -199,13 +202,14 @@ interface NavSectionProps extends BoxProps {
 }
 
 export default function NavSection({ navConfig, isShow = true, ...other }: NavSectionProps) {
+  const { translate } = useLocales();
   return (
     <Box {...other}>
       {navConfig.map((list) => {
         const { subheader, items } = list;
         return (
           <List key={subheader} disablePadding>
-            {isShow && <ListSubheaderStyle>{subheader}</ListSubheaderStyle>}
+            {isShow && <ListSubheaderStyle>{translate(subheader)}</ListSubheaderStyle>}
             {items.map((item: NavItemProps) => (
               <NavItem key={item.title} item={item} isShow={isShow} />
             ))}

@@ -78,10 +78,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const initialize = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
-        console.log('accessToken:', accessToken);
-
+        const username = localStorage.getItem('username') || '';
         if (accessToken && isValidToken(accessToken)) {
-          setSession(accessToken);
+          setSession(accessToken, username);
 
           //const response = await axios.get('/api/account/my-account');
           //const { user } = response.data;
@@ -122,10 +121,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
       identifier: email,
       password: password
     });
-    const { accessToken, user } = response.data;
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('username', user.username);
-    setSession(accessToken);
+    const { jwt, user } = response.data;
+    setSession(jwt, user.username);
     dispatch({
       type: Types.Login,
       payload: {
@@ -142,8 +139,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
     });
     const { accessToken, user } = response.data;
 
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('username', user.username);
+    setSession(accessToken, user.username);
+
     dispatch({
       type: Types.Register,
       payload: {
@@ -153,7 +150,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    setSession(null);
+    setSession(null, '');
     dispatch({ type: Types.Logout });
   };
 

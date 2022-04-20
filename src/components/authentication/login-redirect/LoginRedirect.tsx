@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { isValidToken, setSession } from '../../../utils/jwt';
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -26,10 +27,13 @@ const LoginRedirect = () => {
       .then((res) => {
         // Successfully logged with Strapi
         // Now saving the jwt to use it for future authenticated requests to Strapi
-        localStorage.setItem('accessToken', res.jwt);
-        localStorage.setItem('username', res.user.username);
-        setText('You have been successfully logged in. You will be redirected in a few seconds...');
-        setTimeout(() => navigate('/dashboard/one', { state: { redirect: true } }), 3000); // Redirect to homepage after 3 sec
+        if (res.jwt && isValidToken(res.jwt)) {
+          setSession(res.jwt, res.user.username);
+          setText(
+            'You have been successfully logged in. You will be redirected in a few seconds...'
+          );
+          setTimeout(() => navigate('/dashboard/one', { state: { redirect: true } }), 3000); // Redirect to homepage after 3 sec
+        }
       })
       .catch((err) => {
         console.log(err);

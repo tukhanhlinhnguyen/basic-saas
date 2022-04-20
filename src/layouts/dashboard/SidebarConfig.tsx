@@ -12,35 +12,34 @@ const getIcon = (name: string) => (
 const ICONS = {
   user: getIcon('ic_user'),
   ecommerce: getIcon('ic_ecommerce'),
-  analytics: getIcon('ic_analytics'),
-  dashboard: getIcon('ic_dashboard')
+  dashboard: getIcon('ic_dashboard'),
+  chat: getIcon('ic_chat')
 };
 
 const sidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'general',
+    subheader: 'sidebar.general.title',
     items: [
-      { title: 'One', path: PATH_DASHBOARD.general.pageOne, icon: ICONS.dashboard },
-      { title: 'Two', path: PATH_DASHBOARD.general.pageTwo, icon: ICONS.ecommerce },
-      { title: 'Three', path: PATH_DASHBOARD.general.pageThree, icon: ICONS.analytics }
+      { title: 'sidebar.one.title', path: PATH_DASHBOARD.general.pageOne, icon: ICONS.dashboard },
+      { title: 'sidebar.two.title', path: PATH_DASHBOARD.general.pageTwo, icon: ICONS.ecommerce },
+      { title: 'sidebar.three.title', path: PATH_DASHBOARD.general.pageThree, icon: ICONS.chat }
     ]
   },
 
   // MANAGEMENT
   // ----------------------------------------------------------------------
   {
-    subheader: 'management',
+    subheader: 'sidebar.management.title',
     items: [
       {
         title: 'user',
         path: PATH_DASHBOARD.app.root,
         icon: ICONS.user,
         children: [
-          { title: 'Four', path: PATH_DASHBOARD.app.pageFour },
-          { title: 'Five', path: PATH_DASHBOARD.app.pageFive },
-          { title: 'Six', path: PATH_DASHBOARD.app.pageSix }
+          { title: 'sidebar.five.title', path: PATH_DASHBOARD.app.pageFive },
+          { title: 'sidebar.six.title', path: PATH_DASHBOARD.app.pageSix }
         ]
       }
     ]

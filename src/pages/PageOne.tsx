@@ -2,6 +2,7 @@
 import { Container, Typography } from '@mui/material';
 // hooks
 import useSettings from '../hooks/useSettings';
+import useLocales from '../hooks/useLocales';
 // components
 import Page from '../components/Page';
 
@@ -9,6 +10,7 @@ import Page from '../components/Page';
 
 export default function PageOne() {
   const { themeStretch } = useSettings();
+  const { translate } = useLocales();
 
   return (
     <Page title="Page One | Minimal-UI">
@@ -16,6 +18,7 @@ export default function PageOne() {
         <Typography variant="h3" component="h1" paragraph>
           Page One
         </Typography>
+        <Typography variant="h2">{translate('demo.title')}</Typography>
         <Typography gutterBottom>
           Curabitur turpis. Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc,
           vitae euismod ligula urna in dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit
